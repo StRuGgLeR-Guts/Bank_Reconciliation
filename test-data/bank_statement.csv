@@ -1,0 +1,4 @@
+Date,Description,Amount,Balance
+2025-03-15,AMZN MKTP US*2X4Y6,-156.78,2843.22  # Fuzzy Match
+2025-03-16,STARBUCKS STORE 1234,-45.20,2798.02 # Exact Match
+2025-03-18,OFFICE DEPOT #532,-9500.00,-5201.98 # Anomaly (Unmatched on amount)

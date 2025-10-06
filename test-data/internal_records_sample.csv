@@ -1,0 +1,29 @@
+Date,Vendor,Amount,Category,Invoice,Notes
+2025-03-01,Amazon Web Services,156.78,Cloud Services,INV-2025-001,Monthly AWS hosting
+2025-03-03,Starbucks,45.20,Meals & Entertainment,RCPT-2025-445,Team meeting
+2025-03-05,ACME Corporation,2500.00,Client Payment,INV-2025-789,Project deposit received
+2025-03-06,Coffee Bean & Tea Leaf,12.50,Meals & Entertainment,RCPT-2025-502,Client meeting
+2025-03-08,United Airlines,850.00,Travel,INV-2025-892,Conference flight - John Doe
+2025-03-08,Office Depot,125.50,Office Supplies,INV-2025-923,Printer paper and toner
+2025-03-10,Microsoft Corporation,99.99,Software/Subscriptions,INV-2025-104,Office 365 Business
+2025-03-11,Dropbox Business,119.88,Software/Subscriptions,INV-2025-156,Cloud storage annual
+2025-03-12,Walmart,234.56,Office Supplies,RCPT-2025-678,Break room supplies
+2025-03-13,Google Workspace,180.00,Software/Subscriptions,INV-2025-201,G Suite Business
+2025-03-14,Shell Oil,65.00,Travel,RCPT-2025-732,Fuel for company car
+2025-03-15,AT&T Business,245.90,Utilities,INV-2025-289,Internet and phone
+2025-03-17,Amazon Web Services,425.00,Cloud Services,INV-2025-312,Additional server capacity
+2025-03-17,FedEx Corporation,85.50,Shipping,INV-2025-401,Package to client
+2025-03-18,Salesforce Inc,450.00,Software/Subscriptions,INV-2025-445,CRM monthly fee
+2025-03-19,Adobe Systems,54.99,Software/Subscriptions,INV-2025-489,Creative Cloud team
+2025-03-20,Chipotle Mexican Grill,28.65,Meals & Entertainment,RCPT-2025-812,Working lunch
+2025-03-21,Uber Technologies,35.80,Travel,RCPT-2025-856,Client meeting transportation
+2025-03-22,Lyft Inc,42.15,Travel,RCPT-2025-901,Airport ride
+2025-03-23,TechCorp Solutions,5600.00,Client Payment,INV-2025-567,Project payment received
+2025-03-24,Verizon Wireless,156.78,Utilities,INV-2025-612,Mobile phones
+2025-03-25,Comcast Business,89.99,Utilities,INV-2025-678,Cable internet
+2025-03-26,Hotels.com,450.00,Travel,INV-2025-734,Conference accommodation
+2025-03-27,Zoom Video Communications,149.90,Software/Subscriptions,INV-2025-801,Pro plan annual
+2025-03-28,Dell Inc,2340.00,Equipment,INV-2025-845,New workstation - Developer
+2025-03-29,Starbucks,45.20,Meals & Entertainment,RCPT-2025-912,Team lunch
+2025-03-30,GitHub Inc,210.00,Software/Subscriptions,INV-2025-978,Team plan
+2025-03-31,Office Depot,125.50,Office Supplies,INV-2025-989,Monthly supplies order

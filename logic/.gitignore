@@ -1,0 +1,48 @@
+Byte-compiled / optimized / C files
+pycache/
+*.py[cod]
+*$py.class
+
+Virtual environment
+This is the directory that holds all your installed Python packages.
+It should never be committed to the repository.
+venv/
+.venv/
+env/
+.env/
+
+Trained Machine Learning Models
+The saved .joblib file is a generated artifact and should not be version controlled.
+The model should be retrained from the source data on a new machine.
+trained_model/
+*.joblib
+
+Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+Environment variables
+.env
+
+IDE and editor directories
+.idea/
+.vscode/
+
+OS-generated files
+.DS_Store
+Thumbs.db
