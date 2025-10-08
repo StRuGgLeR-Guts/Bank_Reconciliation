@@ -4,7 +4,7 @@ import express from "express";
 // import { promises as fsPromises } from "fs";
 
 // --- STEP 1: Update the import path to your new multer config ---
-import { upload } from "../middleware/multer-config.js";
+import { upload } from "../multer/multer.js";
 import axios from "axios";
 import FormData from "form-data";
 import "dotenv/config";
