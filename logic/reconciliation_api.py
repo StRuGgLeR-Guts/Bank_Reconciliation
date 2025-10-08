@@ -62,7 +62,7 @@ def clean_df_for_json(df: pd.DataFrame) -> pd.DataFrame:
 
 # --- ML Model Training and Prediction Functions ---
 
-MODEL_PATH = "logic/trained_model/categorizer_model.joblib"
+MODEL_PATH = "trained_model/categorizer_model.joblib"
 
 def load_or_train_categorizer(df: pd.DataFrame):
     """Loads a pre-trained model or trains a new one if it doesn't exist."""
