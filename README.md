@@ -32,7 +32,7 @@ Paginated  tables for matched, unmatched, and anomalous transactions.
 
 📄 Export Functionality: Users can export both individual reconciliation reports and lists of past reports to Excel and PDF for offline analysis and record-keeping.
 
-✨ Immersive UI/UX: A modern, multi-page interface built with react-router-dom and styled with a "glassmorphism" theme for a professional and visually appealing user experience, complete with subtle GSAP animations.
+✨ Immersive UI/UX: A modern, multi-page interface built with react-router-dom and styled with a "glassmorphism" theme for a professional and visually appealing user experience, complete with subtle GSAP scroll animations.
 
 Technical Architecture
 This project uses a scalable microservice architecture to separate concerns and leverage the best tools for each task.
