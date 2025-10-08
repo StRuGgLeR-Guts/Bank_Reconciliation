@@ -56,9 +56,7 @@ Virtual environment directory
 /logic/venv/
 /logic/.venv/
 
-Trained Machine Learning Models (generated artifacts)
-/logic/trained_model/
-*.joblib
+
 
 Distribution / packaging
 /logic/build/
