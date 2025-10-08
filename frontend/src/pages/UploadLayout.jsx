@@ -1,6 +1,6 @@
 import React from 'react';
 import { useOutletContext } from 'react-router-dom';
-import Dashboard from '../components/dashBoard'; // Assuming this is your main dashboard component
+import Dashboard from '../components/DashBoard'; // Assuming this is your main dashboard component
 
 const UploadLayout = () => {
     // --- This component now gets all its props from the RootLayout ---

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import DocumentUploader from './documentUploader';
-import MatchRunner from './matchRunner';
-import ResultDisplay from './resultDisplay';
+import DocumentUploader from './DocumentUploader';
+import MatchRunner from './MatchRunner';
+import ResultDisplay from './ResultDisplay';
 
 const Dashboard = ({ report, loading, error, handleReconciliation, handleReset }) => {
     const [bankFile, setBankFile] = useState(null);

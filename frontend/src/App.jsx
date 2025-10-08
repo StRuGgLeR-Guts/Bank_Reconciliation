@@ -1,5 +1,5 @@
 import React from "react";
-import Dashboard from "./components/dashBoard";
+import Dashboard from "./components/DashBoard";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import UploadLayout from "./pages/UploadLayout";
 import SavedReports from "./pages/SavedReports";
