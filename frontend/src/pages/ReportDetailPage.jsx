@@ -22,7 +22,8 @@ const ReportDetailPage = () => {
             setLoading(true);
             setError('');
             try {
-                const response = await axios.get(`http://localhost:5000/reports/${id}`);
+                const apiURL=import.meta.env.VITE_API_URL
+                const response = await axios.get(`${apiURL}/reports/${id}`);
                 setReport(response.data.data.reportData);
             } catch (err) {
                 setError('Failed to fetch the report details. It may have been deleted.');

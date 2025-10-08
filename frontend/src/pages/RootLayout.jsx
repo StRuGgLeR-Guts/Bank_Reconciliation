@@ -30,7 +30,8 @@ const RootLayout = () => {
             formData.append('bankStatement', filesToProcess.bankFile);
             formData.append('internalRecords', filesToProcess.internalFile);
             try {
-                const response = await axios.post('http://localhost:5000/reconcile', formData);
+                const apiURL=import.meta.env.VITE_API_URL
+                const response = await axios.post(`${apiURL}/reconcile`, formData);
                 setReport(response.data);
             } catch (err) {
                 setError(err.response?.data?.message || 'An unexpected error occurred.');

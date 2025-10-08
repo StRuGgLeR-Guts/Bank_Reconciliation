@@ -54,7 +54,8 @@ const SavedReportsPage = () => {
         const fetchReports = async () => {
             setLoading(true);
             try {
-                const res = await axios.get(`http://localhost:5000/reports?page=${page}&limit=${reportsPerPage}`);
+                const apiURL=import.meta.env.VITE_API_URL
+                const res = await axios.get(`${apiURL}/reports?page=${page}&limit=${reportsPerPage}`);
                 setReports(res.data.data);
                 setPagination(res.data.pagination);
             } catch (err) {

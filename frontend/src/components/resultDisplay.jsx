@@ -22,6 +22,7 @@ const ResultDisplay = ({ report }) => {
     const [isSaving, setIsSaving] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
     const [saveError, setSaveError] = useState('');
+    const apiURL=import.meta.env.VITE_API_URL
 
     const handleSaveReport = async () => {
         if (!reportName.trim()) {
@@ -31,7 +32,7 @@ const ResultDisplay = ({ report }) => {
         setIsSaving(true);
         setSaveError('');
         try {
-            await axios.post('http://localhost:5000/reports', { name: reportName, reportData: report });
+            await axios.post(`${apiURL}/reports`, { name: reportName, reportData: report });
             setIsSaved(true);
         } catch (error) {
             setSaveError(error.response?.data?.message || 'Failed to save report.');
@@ -45,7 +46,7 @@ const ResultDisplay = ({ report }) => {
             {/* --- Navigation & Export Section --- */}
              <div className="w-full flex justify-end mb-6">
                 <div className="flex flex-col sm:flex-row items-center gap-4 p-3 bg-white/10 backdrop-blur-lg rounded-lg shadow-lg">
-                    <ExportControls exportUrl="http://localhost:5000/export" data={report} />
+                    <ExportControls exportUrl={`${apiURL}/export`} data={report} />
                 </div>
             </div>
 
