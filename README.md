@@ -1,103 +1,119 @@
-REBA.ai - Intelligent Bank Reconciliation
-A full-stack, AI-powered application designed to automate the complex process of bank statement reconciliation. This project was developed as a submission for the Ai Firelab Automation Challenge.
+REBA: AI-Powered Bank Reconciliation Application
+An intelligent, full-stack web application designed to automate the tedious process of bank statement reconciliation. REBA (REconciliation and Bank Analytics) leverages a Python-based AI model to intelligently match transactions, identify anomalies, and generate comprehensive reports, all accessible through a modern and responsive React interface. This project was built as a real-world task to demonstrate full-stack MERN capabilities integrated with a Python microservice.
 
-Live Demo URL: [Your Deployed Frontend URL Here]
+Key Features
+Dual File Upload: Seamlessly upload both bank statements (.csv, .xlsx) and internal transaction ledgers.
 
-Video Demo Link: [Link to Your 3-Minute Video Demo Here]
+AI-Powered Reconciliation: A Python backend service handles the core logic, matching transactions with high accuracy.
 
-The Problem
-Financial controllers and accounting teams spend countless hours manually matching messy bank statements against clean internal records. This process is slow, tedious, and prone to human error, leading to inaccurate financial reporting and wasted resources. Discrepancies in descriptions (AMZN MKTP US*2X4Y6 vs. Amazon Web Services), minor date differences, and potential fraud make automation a significant challenge.
+Anomaly Detection: The AI model flags suspicious or unusual transactions for manual review.
 
-The Solution: REBA.ai
-REBA.ai (Reconciliation Bank AI) is an intelligent, full-stack solution that automates this entire workflow. By leveraging a modern microservice architecture and a powerful Python AI engine, it provides a fast, accurate, and auditable reconciliation process, complete with a professional and immersive user interface.
+Dynamic Reporting: View detailed reconciliation results in a clean, user-friendly dashboard with summary cards, charts, and sortable tables.
 
-Core Features
-REBA.ai is built with a feature set designed to solve real-world financial challenges:
+Persistent Storage: Save generated reports to a MongoDB database for future reference and auditing.
 
-🤖 AI-Powered Transaction Matching: Utilizes a weighted algorithm combining fuzzy string matching, date tolerance, and amount verification to intelligently link bank transactions with internal records, complete with a confidence score for each match.
+Export Functionality: Export any report to both PDF and Excel formats with a single click.
 
-🔍 Anomaly Detection: Employs a statistical model (Interquartile Range) to learn a vendor's typical spending patterns from historical data and automatically flags suspicious outliers that could indicate fraud or data entry errors.
+Fully Deployed: The entire application is live, with the frontend, backend, and AI service deployed as separate, communicating microservices on Render.
 
-🧠 ML Auto-Categorization: A scikit-learn classification model is trained on your internal data to predict and assign expense categories to new transactions. The model is saved and reused, improving over time as more data is processed.
+Tech Stack & Architecture
+This project is a multi-service application, demonstrating a modern microservice architecture.
 
-🗂️ Persistent Audit Trail: All reconciliation reports can be named and saved to a MongoDB database, creating a complete, paginated history for financial audits and future reference.
+Architecture Diagram
+[React Frontend] <--> [Node.js/Express Backend API] <--> [Python/FastAPI AI Model]
+       |                        |
+       '-----------------> [MongoDB Database]
 
-📊 Comprehensive Reporting: The frontend dashboard provides a clear, visual breakdown of the reconciliation results, including:
+Technologies Used
+Frontend
 
-Summary cards for a quick overview.
+Backend (API)
 
-An interactive pie chart visualizing spending by category.
+Backend (AI)
 
-Paginated  tables for matched, unmatched, and anomalous transactions.
+Database
 
-📄 Export Functionality: Users can export both individual reconciliation reports and lists of past reports to Excel and PDF for offline analysis and record-keeping.
+Live Demo Link:-
+https://reba-ai.onrender.com
 
-✨ Immersive UI/UX: A modern, multi-page interface built with react-router-dom and styled with a "glassmorphism" theme for a professional and visually appealing user experience, complete with subtle GSAP scroll animations.
+Video Demo Link:-
+https://www.loom.com/share/3ccb917ba79e4b8597ff87c199a7e906?sid=a7669df8-52d6-403a-ac4c-9b9fe1de8614
 
-Technical Architecture
-This project uses a scalable microservice architecture to separate concerns and leverage the best tools for each task.
+Local Setup and Installation
+To run this project on your local machine, please follow these steps:
 
-Frontend: A responsive and interactive user interface built with React and styled with Tailwind CSS.
+Prerequisites:
 
-Backend Gateway: A robust Node.js and Express server that handles all user-facing API requests, manages file uploads, generates export files, and communicates with the AI service.
+Node.js (v18 or higher)
 
-AI Microservice: A dedicated Python service built with FastAPI that performs all the heavy lifting: CSV parsing, AI matching, anomaly detection, and machine learning categorization.
+Python (v3.9 or higher)
 
-Database: MongoDB (with Mongoose) is used to store all historical reconciliation reports, enabling a persistent audit trail.
+MongoDB Atlas account (or a local MongoDB instance)
 
-Getting Started
-Follow these instructions to set up and run the project on your local machine.
+Git
 
-Prerequisites
-Node.js (v18 or later)
+1. Clone the Repository
 
-Python (v3.9 or later)
+git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
+cd your-repo-name
 
-MongoDB (running locally or a connection string to a cloud instance like Atlas)
+2. Backend Setup
 
-1. Backend Setup (Node.js)
-# 1. Navigate to the /backend directory
 cd backend
-
-# 2. Install dependencies
 npm install
 
-# 3. Create a .env file in the /backend root and add the following:
-#    (Replace with your MongoDB connection string)
+# Create a .env file in the 'backend' directory
+# and add the following variables:
+
+backend/.env
+
+PORT=5000
 MONGO_URI=your_mongodb_connection_string
-FASTAPI_URL=http://localhost:8001/reconcile/
+FASTAPI_URL=http://localhost:8001
 
-# 4. Start the server
-npm run dev
+3. Python AI Service Setup
 
-2. AI Service Setup (Python)
-# 1. Navigate to the /logic directory
-cd logic
-
-# 2. Create and activate a virtual environment
-# On macOS/Linux:
-python3 -m venv venv
-source venv/bin/activate
-
-# On Windows:
-python -m venv venv
-.\venv\Scripts\activate
-
-# 3. Install Python dependencies
+cd ../python-service # Or your python folder name
 pip install -r requirements.txt
 
-# 4. Start the FastAPI server 
-uvicorn reconciliation_api:app --reload --port 8001
+# To run the Python service
+uvicorn reconciliation_api:app --host 0.0.0.0 --port 8001
 
-3. Frontend Setup (React)
-# 1. Navigate to the /frontend directory
-cd frontend
+4. Frontend Setup
 
-# 2. Install dependencies
+cd ../frontend
 npm install
 
-# 3. Start the React development server
-npm run dev
+# Create a .env file in the 'frontend' directory
+# and add the following variable:
 
-You can now access the REBA.ai application at http://localhost:5173.
+frontend/.env
 
+VITE_API_URL=http://localhost:5000
+
+5. Run the Application
+
+Run the Python Service: (Terminal 1) uvicorn ...
+
+Run the Backend API: (Terminal 2) cd backend && npm start
+
+Run the Frontend App: (Terminal 3) cd frontend && npm run dev
+
+Deployment on Render
+This application is deployed on Render using a multi-service configuration.
+
+Frontend (reba-ai): Deployed as a Static Site.
+
+Build Command: npm install && npm run build
+
+Publish Directory: dist
+
+Backend (reba-ai-backend): Deployed as a Web Service.
+
+Start Command: npm start
+
+Python AI (reba-ai-python): Deployed as a Web Service.
+
+Start Command: uvicorn reconciliation_api:app --host 0.0.0.0 --port 10000
+
+Built by Sanpreeth Ranjith.
