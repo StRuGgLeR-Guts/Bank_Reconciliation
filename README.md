@@ -99,7 +99,8 @@ Run the Backend API: (Terminal 2) cd backend && npm start
 
 Run the Frontend App: (Terminal 3) cd frontend && npm run dev
 
-Deployment on Render
+Deployment on Render Free Tier ,so the requests and the processing will be slow
+
 This application is deployed on Render using a multi-service configuration.
 
 Frontend (reba-ai): Deployed as a Static Site.
