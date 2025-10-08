@@ -25,36 +25,26 @@ router.post(
     const internalFile = req.files?.["internalRecords"]?.[0];
 
     if (!bankFile || !internalFile) {
-      return res.status(400).json({
-        status: "error",
-        message: "Both 'bankStatement' and 'internalRecords' files are required.",
-      });
+      return res.status(400).json({ message: "Both files are required." });
     }
 
     try {
       const formData = new FormData();
       
-      // --- STEP 2: Append the file from the in-memory buffer, not a file path ---
-      formData.append(
-        "bank_statement",
-        bankFile.buffer, // Use the file buffer
-        bankFile.originalname
-      );
-      formData.append(
-        "internal_records",
-        internalFile.buffer, // Use the file buffer
-        internalFile.originalname
-      );
+      // --- FIX #1: Use the correct field names for Python ---
+      formData.append( "bank_statement", bankFile.buffer, bankFile.originalname );
+      formData.append( "internal_records", internalFile.buffer, internalFile.originalname );
 
       const fastapiUrl = process.env.FASTAPI_URL;
       if (!fastapiUrl) {
           console.error("FATAL: FASTAPI_URL environment variable is not set.");
-          return res.status(500).json({ status: "error", message: 'Server configuration error: AI service URL is missing.' });
+          return res.status(500).json({ message: 'Server configuration error: AI service URL is missing.' });
       }
 
-      console.log(`Forwarding files to AI service at ${fastapiUrl}`);
+      console.log(`Forwarding files to AI service at ${fastapiUrl}/reconcile/`);
 
-      const fastAPIResponse = await axios.post(fastapiUrl, formData, {
+      // --- FIX #2: Add the trailing slash to the URL ---
+      const fastAPIResponse = await axios.post(`${fastapiUrl}/reconcile/`, formData, {
         headers: formData.getHeaders(),
         maxContentLength: Infinity,
         maxBodyLength: Infinity,
@@ -62,21 +52,11 @@ router.post(
 
       return res.status(200).json(fastAPIResponse.data);
     } catch (error) {
-      console.error(
-        "Error during reconciliation proxy:",
-        error.response?.data || error.message
-      );
-      const errorMessage =
-        error.response?.data?.detail ||
-        "Reconciliation failed due to an internal server error.";
+      console.error("Error during reconciliation proxy:", error.response?.data || error.message);
+      const errorMessage = error.response?.data?.detail || "Reconciliation failed due to an internal server error.";
       const statusCode = error.response?.status || 500;
-      return res.status(statusCode).json({
-        status: "error",
-        message: errorMessage,
-      });
-    } 
-    // --- STEP 3: The 'finally' block for cleanup is no longer needed ---
-    // Since we are not saving files to disk, there is nothing to delete.
+      return res.status(statusCode).json({ message: errorMessage });
+    }
   }
 );
 
