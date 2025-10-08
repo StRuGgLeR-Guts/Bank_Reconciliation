@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 // --- START OF THE CORS FIX ---
 // This tells your server which websites are allowed to make requests.
 const allowedOrigins = [
-    'https://reba-ai-frontend.onrender.com', // Your live frontend URL
+    'https://reba-ai.onrender.com', // Your live frontend URL
     'http://localhost:5173'                  // Your local frontend URL for testing
 ];
 
