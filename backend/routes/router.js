@@ -1,21 +1,18 @@
 import express from "express";
-import * as fs from "fs";
-import { promises as fsPromises } from "fs";
-import { upload } from "../multer/multer.js";
+// fs and fsPromises are no longer needed for the reconcile route
+// import * as fs from "fs";
+// import { promises as fsPromises } from "fs";
+
+// --- STEP 1: Update the import path to your new multer config ---
+import { upload } from "../middleware/multer-config.js";
 import axios from "axios";
 import FormData from "form-data";
 import "dotenv/config";
-// --- NEW: Imports for file exporting ---
 import ExcelJS from "exceljs";
 import PDFDocument from "pdfkit";
-
-// --- NEW: Import the Mongoose model for saving reports ---
 import Report from "../models/reports.js";
 
 const router = express.Router();
-
-const FASTAPI_URL =
-  process.env.FASTAPI_URL || "http://localhost:8001/reconcile/";
 
 router.post(
   "/reconcile",
@@ -30,27 +27,34 @@ router.post(
     if (!bankFile || !internalFile) {
       return res.status(400).json({
         status: "error",
-        message:
-          "Both 'bankStatement' and 'internalRecords' files are required.",
+        message: "Both 'bankStatement' and 'internalRecords' files are required.",
       });
     }
 
     try {
       const formData = new FormData();
+      
+      // --- STEP 2: Append the file from the in-memory buffer, not a file path ---
       formData.append(
         "bank_statement",
-        fs.createReadStream(bankFile.path),
+        bankFile.buffer, // Use the file buffer
         bankFile.originalname
       );
       formData.append(
         "internal_records",
-        fs.createReadStream(internalFile.path),
+        internalFile.buffer, // Use the file buffer
         internalFile.originalname
       );
 
-      console.log(`Forwarding files to AI service at ${FASTAPI_URL}`);
+      const fastapiUrl = process.env.FASTAPI_URL;
+      if (!fastapiUrl) {
+          console.error("FATAL: FASTAPI_URL environment variable is not set.");
+          return res.status(500).json({ status: "error", message: 'Server configuration error: AI service URL is missing.' });
+      }
 
-      const fastAPIResponse = await axios.post(FASTAPI_URL, formData, {
+      console.log(`Forwarding files to AI service at ${fastapiUrl}`);
+
+      const fastAPIResponse = await axios.post(fastapiUrl, formData, {
         headers: formData.getHeaders(),
         maxContentLength: Infinity,
         maxBodyLength: Infinity,
@@ -70,20 +74,14 @@ router.post(
         status: "error",
         message: errorMessage,
       });
-    } finally {
-      try {
-        if (bankFile?.path) await fsPromises.unlink(bankFile.path);
-        if (internalFile?.path) await fsPromises.unlink(internalFile.path);
-        console.log("Cleaned up temporary files successfully.");
-      } catch (cleanupError) {
-        console.error(
-          "CRITICAL: Failed to clean up temporary files:",
-          cleanupError
-        );
-      }
-    }
+    } 
+    // --- STEP 3: The 'finally' block for cleanup is no longer needed ---
+    // Since we are not saving files to disk, there is nothing to delete.
   }
 );
+
+
+// --- All other routes below are unchanged and correct ---
 
 /**
  * --- NEW: API Endpoint to Save a Report ---
@@ -102,13 +100,11 @@ router.post("/reports", async (req, res) => {
         });
     }
 
-    // Create a new report document using the Mongoose model
     const report = new Report({
       name,
       reportData,
     });
 
-    // Save the document to the database
     await report.save();
 
     res
@@ -120,7 +116,6 @@ router.post("/reports", async (req, res) => {
       });
   } catch (error) {
     console.error("Error saving report to MongoDB:", error);
-    // Provide more detail if it's a validation error
     if (error.name === "ValidationError") {
       return res.status(400).json({ success: false, message: error.message });
     }
@@ -137,17 +132,15 @@ router.post("/reports", async (req, res) => {
 router.get("/reports", async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const limit = 10; // Show 10 reports per page
+    const limit = 10;
     const skip = (page - 1) * limit;
 
-    // Find reports in the database, sorted by newest first
     const reports = await Report.find()
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
-      .select("name createdAt"); // Important: Only fetch the data needed for the list view
+      .select("name createdAt"); 
 
-    // Get the total number of reports for pagination
     const totalReports = await Report.countDocuments();
     const totalPages = Math.ceil(totalReports / limit);
 
@@ -207,7 +200,6 @@ router.post("/export", async (req, res) => {
       const workbook = new ExcelJS.Workbook();
       const sheet = workbook.addWorksheet("Reconciliation Report");
 
-      // --- Helper to add a table ---
       const addTable = (title, data, columns) => {
         sheet.addRow([title]).font = { bold: true, size: 14 };
         sheet.addRow(columns.map((c) => c.header)).font = { bold: true };
@@ -217,7 +209,6 @@ router.post("/export", async (req, res) => {
         sheet.addRow([]); // Spacer
       };
 
-      // --- Add data to Excel ---
       addTable(
         "Matched Transactions",
         reportData.matched_transactions.map((t) => ({
@@ -278,7 +269,6 @@ router.post("/export", async (req, res) => {
       );
       doc.pipe(res);
 
-      // --- PDF content ---
       doc.fontSize(18).text("Reconciliation Report", { align: "center" });
       doc.moveDown();
 
@@ -290,14 +280,12 @@ router.post("/export", async (req, res) => {
         const itemX = 30;
 
         const columnWidths = {
-          // Simple layout
           Date: 80,
           Description: 200,
           Amount: 70,
           Vendor: 120,
         };
 
-        // Headers
         doc.fontSize(10).font("Helvetica-Bold");
         let currentX = itemX;
         columns.forEach((col) => {
@@ -308,7 +296,6 @@ router.post("/export", async (req, res) => {
         });
         doc.moveDown();
 
-        // Rows
         doc.font("Helvetica");
         data.forEach((row) => {
           currentX = itemX;
@@ -353,3 +340,4 @@ router.post("/export", async (req, res) => {
 });
 
 export default router;
+
