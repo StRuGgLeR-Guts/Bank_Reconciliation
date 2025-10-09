@@ -54,8 +54,8 @@ Git
 
 1. Clone the Repository
 
-git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
-cd your-repo-name
+git clone https://github.com/StRuGgLeR-Guts/Bank_Reconciliation.git
+cd Bank_Reconciliation
 
 2. Backend Setup
 
